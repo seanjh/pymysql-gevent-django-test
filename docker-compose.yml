@@ -1,0 +1,25 @@
+version: '2'
+services:
+  django:
+    build: .
+    environment:
+      - DB_USER=root
+      - DB_PASS=password
+      - DB_NAME=sample
+      - DB_HOST=mysql
+      - DEBUG=True
+    ports:
+      - "8088:80"
+    volumes:
+      - .:/var/app
+    depends_on:
+      - mysql
+    links:
+      - mysql
+  mysql:
+    image: mysql:5.6
+    ports:
+      - "8807:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=sample
